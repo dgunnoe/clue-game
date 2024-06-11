@@ -1,0 +1,14 @@
+// Rooms and room cards
+Room, Parking Lot, P
+Room, Michael's Office, M
+Room, Conference Room, C
+Room, Break Room, B
+Room, Reception, R
+Room, Kitchen, K
+Room, Warehouse, H
+Room, Accounting, A
+Room, Annex, N
+// other spaces on board
+Space, Unused, X
+Space, Walkway, W
+//
