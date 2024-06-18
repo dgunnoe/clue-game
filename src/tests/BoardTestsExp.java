@@ -4,7 +4,8 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+//import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.*;
 
 import experiments.*;
 
@@ -36,6 +37,10 @@ public class BoardTestsExp {
 		Assert.assertEquals(6, targets.size());
 		Assert.assertTrue(targets.contains(board.getCell(3, 0)));
 		Assert.assertTrue(targets.contains(board.getCell(2, 1)));
+		Assert.assertTrue(targets.contains(board.getCell(0, 1)));
+		Assert.assertTrue(targets.contains(board.getCell(1, 2)));
+		Assert.assertTrue(targets.contains(board.getCell(0, 3)));
+		Assert.assertTrue(targets.contains(board.getCell(1, 0)));
 		
 		
 	}

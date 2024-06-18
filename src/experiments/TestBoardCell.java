@@ -1,5 +1,6 @@
 package experiments;
 
+import java.util.HashSet;
 import java.util.Set;
 
 // represents one cell in your grid
@@ -12,10 +13,11 @@ public class TestBoardCell {
 	boolean isOccupied;
 	
 	public TestBoardCell(int r, int c) {
+		adjList = new HashSet<TestBoardCell>();
 		
 	}
 	
-	void addAdjacency (TestBoardCell cell) {
+	void addAdjacency(TestBoardCell cell) {
 		
 	}
 	
