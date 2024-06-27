@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import experiments.TestBoardCell;
+
 // represents one cell in your grid
 public class TestBoardCell {
 	TestBoard board;
@@ -23,10 +25,11 @@ public class TestBoardCell {
 	}
 	
 	public Set<TestBoardCell> getAdjList() {
-		for (TestBoardCell c: adjList) {
-			System.out.println(c);
-		}
 		return adjList;
+	}
+	
+	public void setAdjList(Set<TestBoardCell> list) {
+		adjList = list;
 	}
 	
 	

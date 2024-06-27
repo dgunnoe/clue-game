@@ -23,13 +23,13 @@ public class BoardTestsExp {
 	public void testAdjacency() {
 		// Test (0,0) - top left 
 		TestBoardCell cell = board.getCell(0,0);
-		board.calcAdjLists(cell);
+		board.calcAdjLists();
 		Set<TestBoardCell> testList = cell.getAdjList();
 		System.out.println("size" + testList.size());
 		Assert.assertTrue(testList.contains(board.getCell(1, 0)));
 		Assert.assertTrue(testList.contains(board.getCell(0, 1)));
 		Assert.assertEquals(2, testList.size());
-		/*
+	
 		// Test (0,3) - top right
 		cell = board.getCell(0,3);
 		testList = cell.getAdjList();
@@ -53,13 +53,13 @@ public class BoardTestsExp {
 		Assert.assertTrue(testList.contains(board.getCell(2, 1)));
 		Assert.assertTrue(testList.contains(board.getCell(2, 3)));
 		Assert.assertEquals(4, testList.size());
-
+		
 		// Test (1,0) - left edge
 		cell = board.getCell(1,0);
 		testList = cell.getAdjList();
 		Assert.assertTrue(testList.contains(board.getCell(0, 0)));
 		Assert.assertTrue(testList.contains(board.getCell(1, 1)));
-		Assert.assertTrue(testList.contains(board.getCell(2, 1)));
+		Assert.assertTrue(testList.contains(board.getCell(2, 0)));
 		Assert.assertEquals(3, testList.size());
 		
 		// Test (2,3) - right edge
@@ -69,7 +69,7 @@ public class BoardTestsExp {
 		Assert.assertTrue(testList.contains(board.getCell(2, 2)));
 		Assert.assertTrue(testList.contains(board.getCell(3, 3)));
 		Assert.assertEquals(3, testList.size());
-		*/
+		
 	}
 	
 	//@Test

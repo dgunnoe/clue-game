@@ -28,19 +28,30 @@ public class TestBoard {
 		
 	}
 	
-	public void calcAdjLists(TestBoardCell cell) {
+	public void calcAdjLists() {
 		for (int i = 0; i < ROWS; i++) {
 			for (int j = 0; j < COLS; j++) {
+				TestBoardCell currentCell = grid[i][j];
+				System.out.print("i: " + i + "j: " + j);
+				Set <TestBoardCell> tempAdjList = new HashSet <TestBoardCell>();
+				
 				if (i - 1 >= 0 && i - 1 <= ROWS) { // looking at upper neighbor
-					grid[i][j].addAdjacency(getCell(i-1, j));
-				} else if (i + 1 >= 0 && i + 1 <= ROWS) { // looking at lower neighbor
-					grid[i][j].addAdjacency(getCell(i+1, j));
-				} else if (j - 1 >= 0 && j - 1 <= COLS) { // looking at left neighbor
-					grid[i][j].addAdjacency(getCell(i, j-1));
-				} else if (j + 1 >= 0 && j + 1 <= COLS) { // looking at right neighbor
-					grid[i][j].addAdjacency(getCell(i, j+1));
+					tempAdjList.add(grid[i-1][j]);
+				} 
+				
+				if (i + 1 >= 0 && i + 1 < ROWS) { // looking at lower neighbor
+					tempAdjList.add(grid[i+1][j]);
+				} 
+				
+				if (j - 1 >= 0 && j - 1 <= COLS) { // looking at left neighbor
+					tempAdjList.add(grid[i][j-1]);
+				} 
+				
+				if (j + 1 >= 0 && j + 1 < COLS) { // looking at right neighbor
+					tempAdjList.add(grid[i][j+1]);
 				}
-					
+				System.out.println("temp size " + tempAdjList.size());
+				currentCell.setAdjList(tempAdjList);
 			}
 		}
 	}
@@ -51,7 +62,7 @@ public class TestBoard {
 	
 	// returns the cell from the board at row, col
 	public TestBoardCell getCell(int row, int col) {
-		return cell;
+		return grid[row][col];
 	}
 	
 	public Set<TestBoardCell> getTargets() {
