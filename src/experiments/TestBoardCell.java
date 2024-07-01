@@ -17,7 +17,6 @@ public class TestBoardCell {
 	private int row, col;
 	Set<TestBoardCell> adjList;
 	boolean isRoom, isOccupied;
-	private Map<TestBoardCell, Set<TestBoardCell>> adjMtx;
 	
 	public TestBoardCell(int r, int c) {
 		adjList = new HashSet<TestBoardCell>();
@@ -38,19 +37,28 @@ public class TestBoardCell {
 	}
 	
 	
-	public void getRoom(boolean isRoom) {
+//	public boolean getRoom(boolean isRoom) {
+//		return this.isRoom;
+//	}
+	
+//	public void setRoom(boolean isRoom) {
+//		
+//	}
+	public boolean getIsRoom() {
+		return this.isRoom;
 		
 	}
-	public void setRoom(boolean isRoom) {
+	public boolean getIsOccupied() {
+		return this.isOccupied;
 		
 	}
-	public void getIsRoom() {
-		
-	}
+	
 	public void setIsRoom(boolean isRoom) {
-		
+		this.isRoom = isRoom;
 	}
+	
 	public void setOccupied(boolean isOccupied) {
+		this.isOccupied = isOccupied;
 		
 	}
 	

@@ -5,6 +5,7 @@
 package experiments;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import experiments.TestBoardCell;
@@ -16,11 +17,13 @@ public class TestBoard {
 	TestBoardCell cell;
 	private Set<TestBoardCell> targets;
 	private Set<TestBoardCell> visited;
+	private Map<TestBoardCell, Set<TestBoardCell>> adjMtx;
+
 	
 	
 	
 	public TestBoard() {
-		targets = new HashSet<TestBoardCell>();
+		
 		cell = new TestBoardCell(0,0);
 		grid = new TestBoardCell[ROWS][COLS];
 		for (int row = 0; row < ROWS; row++) {
@@ -29,6 +32,7 @@ public class TestBoard {
 			}
 		}
 		
+		calcAdjLists();
 		
 	}
 	
@@ -36,7 +40,7 @@ public class TestBoard {
 		for (int i = 0; i < ROWS; i++) {
 			for (int j = 0; j < COLS; j++) {
 				TestBoardCell currentCell = grid[i][j];
-				System.out.print("i: " + i + "j: " + j);
+				//System.out.print("i: " + i + "j: " + j);
 				Set <TestBoardCell> tempAdjList = new HashSet <TestBoardCell>();
 				
 				if (i - 1 >= 0 && i - 1 <= ROWS) { // looking at upper neighbor
@@ -54,14 +58,43 @@ public class TestBoard {
 				if (j + 1 >= 0 && j + 1 < COLS) { // looking at right neighbor
 					tempAdjList.add(grid[i][j+1]);
 				}
-				System.out.println("temp size " + tempAdjList.size());
+				//System.out.println("temp size " + tempAdjList.size());
 				currentCell.setAdjList(tempAdjList);
 			}
 		}
 	}
+	
 	// calculates legal targets for a move from startCell of length path length
-	public void calcTargets(TestBoardCell startCell, int pathLength) {
+	public void calcTargets(TestBoardCell thisCell, int pathLength) {
+		targets = new HashSet<TestBoardCell>();
+		visited = new HashSet<TestBoardCell>();
+		visited.add(thisCell); 
+		findAllTargets(thisCell, pathLength);
 		
+		
+	}
+	
+	public void findAllTargets(TestBoardCell thisCell, int pathLength) {
+		Set <TestBoardCell> tempAdjList = thisCell.getAdjList();
+		
+		//System.out.println("here" + tempAdjList.size());
+		for (TestBoardCell adjCell: tempAdjList) {
+			// System.out.println()
+			if (visited.contains(adjCell)) {
+				continue;
+			} else {
+				visited.add(adjCell);
+				if (pathLength == 1 && !(adjCell.getIsOccupied())) {
+					targets.add(adjCell);
+				} else if (adjCell.getIsRoom()){
+					targets.add(adjCell);
+				} else {
+					findAllTargets(adjCell, pathLength - 1);
+				}
+				visited.remove(adjCell);
+			}
+		}
+	
 	}
 	
 	// returns the cell from the board at row, col
