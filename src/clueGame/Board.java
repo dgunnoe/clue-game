@@ -2,6 +2,7 @@ package clueGame;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.io.FileReader;
@@ -31,6 +32,8 @@ public class Board {
      * initialize the board (since we are using singleton pattern)
      */
 	public void initialize() {
+		roomMap = new HashMap<Character, Room>();
+		
 		try {
 			loadSetupConfig();
 		} catch (FileNotFoundException e) {
@@ -38,14 +41,15 @@ public class Board {
 		} catch (BadConfigFormatException e) {
 			System.out.println(e.getMessage());
 		}
-		//loadSetupConfig();
+		
+		
 		loadLayoutConfig();
 		
 		cell = new BoardCell(0,0);
 		numRows = 25;
 		numColumns = 24;
 		grid = new BoardCell[numRows][numColumns];
-		room = new Room();
+		//room = new Room();
 		for (int row = 0; row < numRows; row++) {
 			for (int col = 0; col < numColumns; col++) {
 				grid[row][col] = new BoardCell(row, col);
@@ -58,12 +62,24 @@ public class Board {
 	
 	public void loadSetupConfig() throws FileNotFoundException, BadConfigFormatException {
 		File setupFile = new File(setupConfigFile);
-		System.out.println("Absolute path of setupConfigFile: " + setupFile.getAbsolutePath());
+		//System.out.println("Absolute path of setupConfigFile: " + setupFile.getAbsolutePath());
 
 		Scanner reader = new Scanner(setupFile);
 		while (reader.hasNextLine()) {
 			String data = reader.nextLine();
-			System.out.println(data);
+			String[] arr = data.split(", ", 3);
+			if (arr[0].equals("Room") || arr[0].equals("Space")) {
+				Room newRoom = new Room(arr[1]);
+				roomMap.put(arr[2].charAt(0), newRoom);
+//				for (String s: arr) {
+//					System.out.println(s);
+//				}
+			}
+			
+			//System.out.println(data);
+		}
+		for (Map.Entry<Character, Room> entry : roomMap.entrySet()) {
+		    System.out.println(entry.getKey() + ":" + entry.getValue().toString());
 		}
 		reader.close();
 		
@@ -107,7 +123,7 @@ public class Board {
 	}
 	
 	public Room getRoom(char c) {
-		return room;
+		return roomMap.get(c);
 	}
 
 	public Room getRoom(BoardCell cell) {
