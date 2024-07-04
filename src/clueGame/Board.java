@@ -1,8 +1,11 @@
 package clueGame;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Map;
+import java.util.Scanner;
+import java.io.FileReader;
 
-import experiments.TestBoardCell;
 
 public class Board {
 	private BoardCell[][] grid;
@@ -28,6 +31,16 @@ public class Board {
      * initialize the board (since we are using singleton pattern)
      */
 	public void initialize() {
+		try {
+			loadSetupConfig();
+		} catch (FileNotFoundException e) {
+			System.out.println(e.getMessage());
+		} catch (BadConfigFormatException e) {
+			System.out.println(e.getMessage());
+		}
+		//loadSetupConfig();
+		loadLayoutConfig();
+		
 		cell = new BoardCell(0,0);
 		numRows = 25;
 		numColumns = 24;
@@ -43,16 +56,38 @@ public class Board {
 		
 	}
 	
-	public void loadSetupConfig() {
+	public void loadSetupConfig() throws FileNotFoundException, BadConfigFormatException {
+		File setupFile = new File(setupConfigFile);
+		System.out.println("Absolute path of setupConfigFile: " + setupFile.getAbsolutePath());
+
+		Scanner reader = new Scanner(setupFile);
+		while (reader.hasNextLine()) {
+			String data = reader.nextLine();
+			System.out.println(data);
+		}
+		reader.close();
 		
 	}
 	
 	public void loadLayoutConfig() {
-		
+		try {
+			File layoutFile = new File(layoutConfigFile);
+			Scanner reader = new Scanner(layoutFile);
+			while (reader.hasNextLine()) {
+				String data = reader.nextLine();
+				System.out.println(data);
+			}
+			reader.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("error: ");
+			e.printStackTrace();
+		}
 	}
 
 	public void setConfigFiles(String string, String string2) {
 		// TODO Auto-generated method stub
+		layoutConfigFile = string;
+		setupConfigFile = string2;
 		
 	}
 	
