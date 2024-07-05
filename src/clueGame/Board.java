@@ -43,19 +43,14 @@ public class Board {
 		}
 		
 		
-		loadLayoutConfig();
-		
-		cell = new BoardCell(0,0);
-		numRows = 25;
-		numColumns = 24;
-		grid = new BoardCell[numRows][numColumns];
-		//room = new Room();
-		for (int row = 0; row < numRows; row++) {
-			for (int col = 0; col < numColumns; col++) {
-				grid[row][col] = new BoardCell(row, col);
-			}
+		try {
+			loadLayoutConfig();
+		} catch (FileNotFoundException e) {
+			System.out.println(e.getMessage());
+		} catch (BadConfigFormatException e) {
+			System.out.println(e.getMessage());
 		}
-//		
+		
 //		calcAdjLists();
 		
 	}
@@ -85,15 +80,40 @@ public class Board {
 		
 	}
 	
-	public void loadLayoutConfig() {
+	public void loadLayoutConfig() throws FileNotFoundException, BadConfigFormatException {
 		try {
 			File layoutFile = new File(layoutConfigFile);
-			Scanner reader = new Scanner(layoutFile);
-			while (reader.hasNextLine()) {
-				String data = reader.nextLine();
-				System.out.println(data);
+			Scanner reader1 = new Scanner(layoutFile);
+			boolean firstRun = true;
+			while (reader1.hasNextLine()) {
+				String data = reader1.nextLine();
+				String[] cols = data.split("\\s*,\\s*"); // This regex will split on commas surrounded by any amount of whitespace
+				numColumns = cols.length;
+				System.out.println();
+				numRows++;
+				
 			}
-			reader.close();
+			reader1.close();
+
+			
+			grid = new BoardCell[numRows][numColumns];
+			int tempRow = 0;
+			int counter = 0;
+			Scanner reader2 = new Scanner(layoutFile);
+			while (reader2.hasNextLine()) {
+				String data = reader2.nextLine();
+				String[] splitRow = data.split("\\s*,\\s*");
+				for (int tempCol = 0; tempCol < numColumns; tempCol++) {
+					String splitCol = splitRow[tempCol];
+					counter++;
+					//System.out.println(splitCol);
+					grid[tempRow][tempCol] = new BoardCell(tempRow, tempCol, splitCol);
+				}
+				tempRow++;
+					
+			}
+			reader2.close();	
+			System.out.println(counter);
 		} catch (FileNotFoundException e) {
 			System.out.println("error: ");
 			e.printStackTrace();
@@ -109,12 +129,12 @@ public class Board {
 	
 	public int getNumRows() {
 		// TODO Auto-generated method stub
-		return 0;
+		return numRows;
 	}
 
 	public int getNumColumns() {
 		// TODO Auto-generated method stub
-		return 0;
+		return numColumns;
 	}
 
 	public BoardCell getCell(int i, int j) {
