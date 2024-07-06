@@ -108,6 +108,16 @@ public class Board {
 					counter++;
 					//System.out.println(splitCol);
 					grid[tempRow][tempCol] = new BoardCell(tempRow, tempCol, splitCol);
+				
+					BoardCell newCell = grid[tempRow][tempCol];
+					Room newRoom = roomMap.get(newCell.getInitial());
+					
+					// if label has # in it, setLabelCell
+					if (newCell.isLabel()) { // Cell knows if it's center/label
+						newRoom.setLabelCell(newCell);
+					} else if (newCell.isRoomCenter()) {
+						newRoom.setCenterCell(newCell);
+					}
 				}
 				tempRow++;
 					
@@ -148,8 +158,7 @@ public class Board {
 
 	public Room getRoom(BoardCell cell) {
 		// TODO Auto-generated method stub
-		return room;
-	}
+		return roomMap.get(cell.getInitial());	}
      
     
      

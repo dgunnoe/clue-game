@@ -89,17 +89,21 @@ public class BoardCell {
 
 	public boolean isLabel() {
 		// TODO Auto-generated method stub
-		return false;
+		return roomLabel;
 	}
 
 	public boolean isRoomCenter() {
 		// TODO Auto-generated method stub
-		return false;
+		return roomCenter;
 	}
 
 	public char getSecretPassage() {
 		// TODO Auto-generated method stub
-		return 0;
+		return secretPassage;
+	}
+	
+	public char getInitial() {
+		return initial;
 	}
 	
 }
