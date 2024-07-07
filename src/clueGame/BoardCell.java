@@ -105,5 +105,11 @@ public class BoardCell {
 	public char getInitial() {
 		return initial;
 	}
+
+
+	public void setOccupied(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

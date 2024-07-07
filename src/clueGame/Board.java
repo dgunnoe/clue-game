@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 import java.io.FileReader;
 
 
@@ -129,6 +130,11 @@ public class Board {
 			e.printStackTrace();
 		}
 	}
+	
+	public void calcTargets(BoardCell cell2, int i) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	public void setConfigFiles(String string, String string2) {
 		// TODO Auto-generated method stub
@@ -136,6 +142,7 @@ public class Board {
 		setupConfigFile = string2;
 		
 	}
+	
 	
 	public int getNumRows() {
 		// TODO Auto-generated method stub
@@ -159,6 +166,18 @@ public class Board {
 	public Room getRoom(BoardCell cell) {
 		// TODO Auto-generated method stub
 		return roomMap.get(cell.getInitial());	}
+
+	public Set<BoardCell> getTargets() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Set<BoardCell> getAdjList(int i, int j) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
      
     
      
