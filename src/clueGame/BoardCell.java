@@ -16,6 +16,7 @@ public class BoardCell {
 	private boolean roomCenter;
 	private char secretPassage;
 	private boolean isRoom;
+	private boolean isOccupied;
 	private boolean target;
 
 
@@ -63,6 +64,7 @@ public class BoardCell {
 					doorDirection = DoorDirection.UP;
 				} else { // Char of room it leads to
 					secretPassage = id;
+					//System.out.println(secretPassage);
 				}
 			}
 			
@@ -106,9 +108,31 @@ public class BoardCell {
 		return initial;
 	}
 
+	public void setAdjList(Set<BoardCell> list) {
+		adjList = list;
+	}
+	
+	public Set<BoardCell> getAdjList() {
+		return adjList;
+	}
 
-	public void setOccupied(boolean b) {
+
+	public boolean getIsOccupied() {
 		// TODO Auto-generated method stub
+		return this.isOccupied;
+	}
+
+
+	public boolean getIsRoom() {
+		return this.isRoom;
+	}
+	
+	public void setIsRoom(boolean isRoom) {
+		this.isRoom = isRoom;
+	}
+	
+	public void setOccupied(boolean isOccupied) {
+		this.isOccupied = isOccupied;
 		
 	}
 	

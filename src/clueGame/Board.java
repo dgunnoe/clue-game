@@ -3,9 +3,13 @@ package clueGame;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
+
+import experiments.TestBoardCell;
+
 import java.io.FileReader;
 
 
@@ -19,6 +23,8 @@ public class Board {
     private static Board theInstance = new Board();
 	private Room room;
 	private BoardCell cell;
+	private Set<BoardCell> targets;
+	private Set<BoardCell> visited;
   
     // constructor is private to ensure only one can be created
     private Board() {
@@ -52,7 +58,7 @@ public class Board {
 			System.out.println(e.getMessage());
 		}
 		
-//		calcAdjLists();
+		calcAdjLists();
 		
 	}
 	
@@ -74,9 +80,9 @@ public class Board {
 			
 			//System.out.println(data);
 		}
-		for (Map.Entry<Character, Room> entry : roomMap.entrySet()) {
-		    System.out.println(entry.getKey() + ":" + entry.getValue().toString());
-		}
+//		for (Map.Entry<Character, Room> entry : roomMap.entrySet()) {
+//		    System.out.println(entry.getKey() + ":" + entry.getValue().toString());
+//		}
 		reader.close();
 		
 	}
@@ -90,7 +96,7 @@ public class Board {
 				String data = reader1.nextLine();
 				String[] cols = data.split("\\s*,\\s*"); // This regex will split on commas surrounded by any amount of whitespace
 				numColumns = cols.length;
-				System.out.println();
+				//System.out.println();
 				numRows++;
 				
 			}
@@ -124,20 +130,124 @@ public class Board {
 					
 			}
 			reader2.close();	
-			System.out.println(counter);
+			//System.out.println(counter);
 		} catch (FileNotFoundException e) {
 			System.out.println("error: ");
 			e.printStackTrace();
 		}
 	}
 	
-	public void calcTargets(BoardCell cell2, int i) {
+	public void calcAdjLists() {
+		for (int i = 0; i < numRows; i++) {
+			for (int j = 0; j < numColumns; j++) {
+				boolean isWalkway = false;
+				boolean isCenterRoom = false;
+				boolean isRoom = false;
+				boolean isDoorway = false;
+				Set <BoardCell> tempAdjList = new HashSet <BoardCell>();
+				BoardCell currentCell = grid[i][j];
+				
+				if (currentCell.isDoorway()) {
+					isDoorway = true;
+				} 
+				
+				if (currentCell.getInitial() == 'W') {
+					isWalkway = true;
+				}
+				
+				if (currentCell.isRoomCenter()) {
+					isCenterRoom = true;
+				}
+				
+	
+				if (isWalkway) {
+					if (i - 1 >= 0 && i - 1 <= numRows && grid[i-1][j].getInitial() == 'W') { // looking at upper neighbor
+						tempAdjList.add(grid[i-1][j]);
+					} 
+					if (i + 1 >= 0 && i + 1 < numRows && grid[i+1][j].getInitial() == 'W') { // looking at lower neighbor
+						tempAdjList.add(grid[i+1][j]);
+					} 
+					if (j - 1 >= 0 && j - 1 <= numColumns && grid[i][j-1].getInitial() == 'W') { // looking at left neighbor
+						tempAdjList.add(grid[i][j-1]);
+					} 
+					if (j + 1 >= 0 && j + 1 < numColumns && grid[i][j+1].getInitial() == 'W') { // looking at right neighbor
+						tempAdjList.add(grid[i][j+1]);
+					}
+					//System.out.println("temp size " + tempAdjList.size());
+					
+					if (isDoorway) {
+						int doorwayRow = i;
+						int doorwayCol = j;
+						
+						// Calculate adjustment
+						if (currentCell.getDoorDirection() == DoorDirection.DOWN) {
+							doorwayRow++;
+						} else if (currentCell.getDoorDirection() == DoorDirection.UP) {
+							doorwayRow--;
+						} else if (currentCell.getDoorDirection() == DoorDirection.LEFT) {
+							doorwayCol--;
+						} else if (currentCell.getDoorDirection() == DoorDirection.RIGHT) {
+							doorwayCol++;
+						}
+						
+						BoardCell centerCell = this.getRoom(grid[doorwayRow][doorwayCol]).getCenterCell(); // get center cell of room
+						
+						tempAdjList.add(centerCell); // Add room center to this cell
+						centerCell.addAdjacency(currentCell); // Add the doorway to the center cell's adjList
+					}
+				currentCell.setAdjList(tempAdjList);
+				
+				} else if (currentCell.getSecretPassage() != '\0') { // '\0' null character
+					BoardCell currentCenterCell = getRoom(currentCell).getCenterCell(); // Get center cell of current room
+					
+					char secretRoom = currentCell.getSecretPassage();
+					
+					BoardCell otherCenterCell = getRoom(secretRoom).getCenterCell(); // Get center cell of other room
+					
+					currentCenterCell.addAdjacency(otherCenterCell); // Add to each other's adjLists
+					otherCenterCell.addAdjacency(currentCenterCell); 				
+					
+				}
+				
+			}
+		}
+	}
+	
+	
+	public void calcTargets(BoardCell thisCell, int pathLength) {
 		// TODO Auto-generated method stub
+		targets = new HashSet<BoardCell>();
+		visited = new HashSet<BoardCell>();
+		visited.add(thisCell); 
+		findAllTargets(thisCell, pathLength);
+	}
+	
+	public void findAllTargets(BoardCell thisCell, int pathLength) {
+		Set <BoardCell> tempAdjList = thisCell.getAdjList();
 		
+		//System.out.println("here" + tempAdjList.size());
+		for (BoardCell adjCell: tempAdjList) {
+			// System.out.println()
+			if (visited.contains(adjCell)) {
+				continue;
+			} else {
+				visited.add(adjCell);
+				if (pathLength == 1 && !(adjCell.getIsOccupied())) {
+					targets.add(adjCell);
+				} else if (adjCell.getIsRoom()){
+					targets.add(adjCell);
+				} else if (adjCell.getIsOccupied()) {
+					continue;
+				} else {
+					findAllTargets(adjCell, pathLength - 1);
+				}
+				visited.remove(adjCell);
+			}
+		}
+	
 	}
 
 	public void setConfigFiles(String string, String string2) {
-		// TODO Auto-generated method stub
 		layoutConfigFile = string;
 		setupConfigFile = string2;
 		
@@ -145,17 +255,14 @@ public class Board {
 	
 	
 	public int getNumRows() {
-		// TODO Auto-generated method stub
 		return numRows;
 	}
 
 	public int getNumColumns() {
-		// TODO Auto-generated method stub
 		return numColumns;
 	}
 
 	public BoardCell getCell(int i, int j) {
-		// TODO Auto-generated method stub
 		return grid[i][j];
 	}
 	
@@ -164,17 +271,15 @@ public class Board {
 	}
 
 	public Room getRoom(BoardCell cell) {
-		// TODO Auto-generated method stub
-		return roomMap.get(cell.getInitial());	}
-
-	public Set<BoardCell> getTargets() {
-		// TODO Auto-generated method stub
-		return null;
+		return roomMap.get(cell.getInitial());	
 	}
 
-	public Set<BoardCell> getAdjList(int i, int j) {
-		// TODO Auto-generated method stub
-		return null;
+	public Set<BoardCell> getTargets() {
+		return targets;
+	}
+
+	public Set<BoardCell> getAdjList(int row, int col) {
+		return grid[row][col].getAdjList();
 	}
 
 	

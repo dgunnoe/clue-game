@@ -21,7 +21,6 @@ public class Room {
 	}
 
 	public BoardCell getCenterCell() {
-		// TODO Auto-generated method stub
 		return centerCell;
 	}
 	

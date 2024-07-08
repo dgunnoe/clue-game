@@ -22,13 +22,14 @@ public class BoardAdjTargetTest306 {
 		// Board is singleton, get the only instance
 		board = Board.getInstance();
 		// set the file names to use my config files
-		board.setConfigFiles("ClueLayout306.csv", "ClueSetup306.txt");
+		board.setConfigFiles("data/ClueLayout306.csv", "data/ClueSetup306.txt");
 		// Initialize will load config files
 		board.initialize();
 	}
 	
 	// Ensure that player does not move around within room
 	// These cells are LIGHT ORANGE on the planning spreadsheet
+	
 	@Test
 	public void testAdjacenciesRooms()
 	{
@@ -53,6 +54,7 @@ public class BoardAdjTargetTest306 {
 
 	// Ensure door locations include their rooms and also additional walkways
 	// These cells are LIGHT ORANGE on the planning spreadsheet
+	
 	@Test
 	public void testAdjacencyDoor()
 	{
@@ -60,11 +62,13 @@ public class BoardAdjTargetTest306 {
 		assertEquals(2, testList.size());
 		assertTrue(testList.contains(board.getCell(14, 2)));
 		assertTrue(testList.contains(board.getCell(11, 2)));
+		
 		testList = board.getAdjList(19, 5);
 		assertEquals(3, testList.size());
 		assertTrue(testList.contains(board.getCell(21, 2)));
 		assertTrue(testList.contains(board.getCell(18, 5)));
 		assertTrue(testList.contains(board.getCell(19, 6)));
+		
 		testList = board.getAdjList(19, 7);
 		assertEquals(4, testList.size());
 		assertTrue(testList.contains(board.getCell(18, 7)));
@@ -75,6 +79,7 @@ public class BoardAdjTargetTest306 {
 
 	// Test a variety of walkway scenarios
 	// These tests are Dark Orange on the planning spreadsheet
+	
 	@Test
 	public void testAdjacencyWalkways()
 	{
@@ -108,6 +113,7 @@ public class BoardAdjTargetTest306 {
 
 	// Tests out of room center, 1, 3 and 4
 	// These are LIGHT BLUE on the planning spreadsheet
+	
 	@Test
 	public void testTargetsInDiningRoom() {
 		// test a roll of 1
@@ -135,6 +141,7 @@ public class BoardAdjTargetTest306 {
 		assertTrue(targets.contains(board.getCell(12, 14)));
 		assertTrue(targets.contains(board.getCell(15, 15)));
 	}
+	
 	
 	@Test
 	public void testTargetsInKitchen() {
@@ -192,6 +199,7 @@ public class BoardAdjTargetTest306 {
 		assertTrue(targets.contains(board.getCell(6, 17)));
 		assertTrue(targets.contains(board.getCell(5, 16)));
 	}
+	
 	@Test
 	public void testTargetsInWalkway1() {
 		// test a roll of 1
@@ -240,6 +248,7 @@ public class BoardAdjTargetTest306 {
 		assertTrue(targets.contains(board.getCell(11, 5)));
 	}
 	
+	
 	@Test
 	// test to make sure occupied locations do not cause problems
 	public void testTargetsOccupied() {
@@ -275,4 +284,6 @@ public class BoardAdjTargetTest306 {
 		assertTrue(targets.contains(board.getCell(8, 19)));
 		assertTrue(targets.contains(board.getCell(8, 15)));
 	}
+	
+	
 }
