@@ -22,7 +22,7 @@ public class BoardAdjTargetTest {
 		// Board is singleton, get the only instance
 		board = Board.getInstance();
 		// set the file names to use my config files
-		board.setConfigFiles("ClueLayout306.csv", "ClueSetup306.txt");
+		board.setConfigFiles("data/ClueLayout.csv", "data/ClueSetup.txt");
 		// Initialize will load config files
 		board.initialize();
 	}
@@ -33,22 +33,29 @@ public class BoardAdjTargetTest {
 	public void testAdjacenciesRooms()
 	{
 		// we want to test a couple of different rooms.
-		// First, the study that only has a single door but a secret room
-		Set<BoardCell> testList = board.getAdjList(2, 2);
-		assertEquals(2, testList.size());
-		assertTrue(testList.contains(board.getCell(4, 6)));
-		assertTrue(testList.contains(board.getCell(20, 19)));
+		// First, the warehouse that has 2 doors but a secret room
+		Set<BoardCell> testList = board.getAdjList(22, 3);
+		assertEquals(3, testList.size());
+		assertTrue(testList.contains(board.getCell(4, 12)));
+		assertTrue(testList.contains(board.getCell(17, 4)));
+		assertTrue(testList.contains(board.getCell(20, 7)));
 		
-		// now test the ballroom (note not marked since multiple test here)
-		testList = board.getAdjList(20, 11);
-		assertEquals(4, testList.size());
-		assertTrue(testList.contains(board.getCell(16, 9)));
+		// Michael's office
+		testList = board.getAdjList(3, 7);
+		assertEquals(1, testList.size());
+		assertTrue(testList.contains(board.getCell(6, 7)));
 		
 		// one more room, the kitchen
-		testList = board.getAdjList(20, 19);
-		assertEquals(2, testList.size());
-		assertTrue(testList.contains(board.getCell(17, 18)));
-		assertTrue(testList.contains(board.getCell(2, 2)));
+		testList = board.getAdjList(14, 20);
+		assertEquals(3, testList.size());
+		assertTrue(testList.contains(board.getCell(12, 17)));
+		assertTrue(testList.contains(board.getCell(13, 17)));
+		assertTrue(testList.contains(board.getCell(4, 22)));
+		
+		
+		testList = board.getAdjList(10, 0);
+		assertEquals(0, testList.size());
+
 	}
 
 	// Ensure door locations include their rooms and also additional walkways
@@ -56,21 +63,25 @@ public class BoardAdjTargetTest {
 	@Test
 	public void testAdjacencyDoor()
 	{
-		Set<BoardCell> testList = board.getAdjList(11, 1);
-		assertEquals(2, testList.size());
-		assertTrue(testList.contains(board.getCell(14, 2)));
-		assertTrue(testList.contains(board.getCell(11, 2)));
-		testList = board.getAdjList(19, 5);
-		assertEquals(3, testList.size());
-		assertTrue(testList.contains(board.getCell(21, 2)));
-		assertTrue(testList.contains(board.getCell(18, 5)));
-		assertTrue(testList.contains(board.getCell(19, 6)));
-		testList = board.getAdjList(19, 7);
+		Set<BoardCell> testList = board.getAdjList(9, 3);
 		assertEquals(4, testList.size());
-		assertTrue(testList.contains(board.getCell(18, 7)));
-		assertTrue(testList.contains(board.getCell(19, 6)));
-		assertTrue(testList.contains(board.getCell(20, 7)));
-		assertTrue(testList.contains(board.getCell(20, 11)));
+		assertTrue(testList.contains(board.getCell(9, 2)));
+		assertTrue(testList.contains(board.getCell(9, 4)));
+		assertTrue(testList.contains(board.getCell(8, 3)));
+		assertTrue(testList.contains(board.getCell(12, 4)));
+		
+//		testList = board.getAdjList(19, 5);
+//		assertEquals(3, testList.size());
+//		assertTrue(testList.contains(board.getCell(21, 2)));
+//		assertTrue(testList.contains(board.getCell(18, 5)));
+//		assertTrue(testList.contains(board.getCell(19, 6)));
+//		
+//		testList = board.getAdjList(19, 7);
+//		assertEquals(4, testList.size());
+//		assertTrue(testList.contains(board.getCell(18, 7)));
+//		assertTrue(testList.contains(board.getCell(19, 6)));
+//		assertTrue(testList.contains(board.getCell(20, 7)));
+//		assertTrue(testList.contains(board.getCell(20, 11)));
 	}
 
 	// Test a variety of walkway scenarios
