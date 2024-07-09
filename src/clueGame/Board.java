@@ -246,6 +246,10 @@ public class Board {
 		}
 	
 	}
+	
+	public void deal() {
+		
+	}
 
 	public void setConfigFiles(String string, String string2) {
 		layoutConfigFile = string;
