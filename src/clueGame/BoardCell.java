@@ -3,8 +3,6 @@ package clueGame;
 import java.util.HashSet;
 import java.util.Set;
 
-import experiments.TestBoard;
-import experiments.TestBoardCell;
 
 public class BoardCell {
 	Board board;

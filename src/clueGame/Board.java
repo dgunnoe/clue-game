@@ -76,7 +76,10 @@ public class Board {
 //				for (String s: arr) {
 //					System.out.println(s);
 //				}
-			}
+			} 
+//			else if (arr[0].equals("Player")) {
+//				Player newPlayer = new Player(arr[1], Integer.parseInt(arr[2]), Integer.parseInt(arr[3]));
+//			}
 			
 			//System.out.println(data);
 		}

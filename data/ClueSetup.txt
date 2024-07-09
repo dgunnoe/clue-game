@@ -8,7 +8,24 @@ Room, Kitchen, K
 Room, Warehouse, H
 Room, Accounting, A
 Room, Annex, N
+
 // other spaces on board
 Space, Unused, X
 Space, Walkway, W
-//
+
+// Players
+Player, Michael Scott, 12, 12
+Player, Jim Halpert, 13, 13
+Player, Pam Beesly, 14, 14
+Player, Dwight Schrute, 15, 15
+Player, Kelly Kapoor, 16, 16
+Player, Kevin Malone, 17, 17
+
+// Weapons
+Weapon, Dundie Trophy 
+Weapon, Ream of Dunder Mifflin Paper
+Weapon, Bacon Grill 
+Weapon, Poisoned Pretzel 
+Weapon, Rabid Bat 
+Weapon, World's Best Boss Coffee Mug
+

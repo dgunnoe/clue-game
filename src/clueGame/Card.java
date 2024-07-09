@@ -6,5 +6,7 @@ public class Card {
 	public boolean equals(Card target) {
 		return false;
 	}
+	
+//	public equals()
 
 }
