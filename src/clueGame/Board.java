@@ -75,6 +75,7 @@ public class Board {
 			String data = reader.nextLine();
 			String[] arr = data.split(", ", 3);
 			System.out.println(arr[0]);
+			
 			if (arr[0].equals("Room") || arr[0].equals("Space")) {
 				Room newRoom = new Room(arr[1]);
 				roomMap.put(arr[2].charAt(0), newRoom);
@@ -95,6 +96,7 @@ public class Board {
 			} else {
 				System.out.println("lll");
 			}
+			
 			
 			//System.out.println(data);
 		}

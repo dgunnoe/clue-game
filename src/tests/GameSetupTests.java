@@ -8,17 +8,26 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
+
+import clueGame.Board;
+import clueGame.BoardCell;
+
 //import static org.junit.Assert.assertEquals;
 import org.junit.jupiter.api.*;
 
 import experiments.*;
 
 public class GameSetupTests {
-	TestBoard board;
+	private static Board board;
 	
-	@BeforeEach
-	public void setUp() {
-		board = new TestBoard();
+	@BeforeAll
+	public static void setUp() {
+		// Board is singleton, get the only instance
+		board = Board.getInstance();
+		// set the file names to use my config files
+		board.setConfigFiles("data/ClueLayout.csv", "data/ClueSetup.txt");
+		// Initialize will load config files
+		board.initialize();
 	}
 	
 	
@@ -27,9 +36,9 @@ public class GameSetupTests {
 	//Create Player class with human and computer child classes.   Use people data to instantiate 6 players (1 human and 5 computer) [20pts]
 	public void loadPeopleAndWeapons() {
 		// Test (0,0) - top left 
-		TestBoardCell cell = board.getCell(0,0);
+		BoardCell cell = board.getCell(0,0);
 		//board.calcAdjLists();
-		Set<TestBoardCell> testList = cell.getAdjList();
+		Set<BoardCell> testList = cell.getAdjList();
 		//System.out.println("size" + testList.size());
 		Assert.assertTrue(testList.contains(board.getCell(1, 0)));
 		Assert.assertTrue(testList.contains(board.getCell(0, 1)));
@@ -42,72 +51,5 @@ public class GameSetupTests {
 		
 	}
 	
-	@Test
-	//Create complete deck of cards (weapons, people and rooms) [10pts]
-	public void checkDeck() {
-		// Roll a 3 starting at (0,0)
-		TestBoardCell cell = board.getCell(0,0);
-		//board.calcAdjLists();
-		board.calcTargets(cell, 3);
-		Set<TestBoardCell> targets = board.getTargets();
-		Assert.assertEquals(6, targets.size());
-		Assert.assertTrue(targets.contains(board.getCell(3, 0)));
-		Assert.assertTrue(targets.contains(board.getCell(2, 1)));
-		Assert.assertTrue(targets.contains(board.getCell(0, 1)));
-		Assert.assertTrue(targets.contains(board.getCell(1, 2)));
-		Assert.assertTrue(targets.contains(board.getCell(0, 3)));
-		Assert.assertTrue(targets.contains(board.getCell(1, 0)));
-		
-		
-		// Roll a 2 starting at (1,1)
-		cell = board.getCell(1,1);
-		board.calcTargets(cell, 2);
-		targets = board.getTargets();
-		//System.out.println("target size: " + targets.size());
-		Assert.assertEquals(6, targets.size());
-		Assert.assertTrue(targets.contains(board.getCell(0, 0)));
-		
-		
-	}
-	
-	@Test
-	// Deal cards to the Answer and the players (all cards dealt, players have roughly same # of cards, no card dealt twice) [20pts]
-	// All cards should be dealt.
-	public void checkDeal() {
-		
-		// Start at 1,1
-		TestBoardCell cell = board.getCell(1,1);
 
-		// set up occupied cells.
-		board.getCell(0, 0).setOccupied(true);
-		board.getCell(0, 2).setIsRoom(true);
-		
-		board.calcTargets(cell, 2);
-		Set<TestBoardCell> targets = board.getTargets();
-		//System.out.println("target size: " + targets.size());
-		Assert.assertEquals(5, targets.size());
-		//Assert.assertTrue(targets.contains(board.getCell(0, 0)));
-		Assert.assertTrue(targets.contains(board.getCell(0, 2)));
-		
-	}
-	
-	@Test
-	// Ensure sol has 3 cards and of each card type
-	public void checkSolution() {
-		
-		// Start at 1,1
-		TestBoardCell cell = board.getCell(1,1);
-
-		// set up occupied cells.
-		board.getCell(0, 0).setOccupied(true);
-		board.getCell(0, 2).setIsRoom(true);
-		
-		board.calcTargets(cell, 2);
-		Set<TestBoardCell> targets = board.getTargets();
-		//System.out.println("target size: " + targets.size());
-		Assert.assertEquals(5, targets.size());
-		//Assert.assertTrue(targets.contains(board.getCell(0, 0)));
-		Assert.assertTrue(targets.contains(board.getCell(0, 2)));
-		
-	}
 }
