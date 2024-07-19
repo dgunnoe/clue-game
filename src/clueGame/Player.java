@@ -12,6 +12,10 @@ public abstract class Player {
 		this.startRow = startRow;
 		this.startColumn = startColumn;
 	}
+	
+	public void updateHand(Card card) {
+		 
+	}
 
 	public String getName() {
 		return name;
