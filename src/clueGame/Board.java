@@ -84,17 +84,21 @@ public class Board {
 //					System.out.println(s);
 //				}
 			} else if (arr[0].equals("Player")) {
-				System.out.print(firstRun);
+				//System.out.print(firstRun);
 				if (firstRun) {
-					Player newPlayer = new HumanPlayer(arr[1], Integer.parseInt(arr[2]), Integer.parseInt(arr[3]));
-					System.out.println(newPlayer.getName());
+					System.out.println("Here");
+					//System.out.println(Integer.parseInt(arr[2]));
+					Player newPlayer = new HumanPlayer(arr[1], 2, 2);
+					System.out.print("New Human Player made. ");
+					System.out.println(arr[1]);
 					firstRun = false;
 				} else {
-					Player newPlayer = new ComputerPlayer(arr[1], Integer.parseInt(arr[2]), Integer.parseInt(arr[3]));
-					System.out.println(newPlayer.toString());
+					Player newPlayer = new ComputerPlayer(arr[1], 3, 3);
+					System.out.print("New Computer Player made. ");
+					System.out.println(arr[1]);
 				}
 			} else {
-				System.out.println("lll");
+				System.out.println("Weapon");
 			}
 			
 			
