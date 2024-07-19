@@ -1,5 +1,5 @@
 package tests;
-
+// this test fails. never personalized to my data. use 306
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

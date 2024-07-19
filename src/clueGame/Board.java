@@ -87,7 +87,7 @@ public class Board {
 				//System.out.print(firstRun);
 				if (firstRun) {
 					System.out.println("Here");
-					//System.out.println(Integer.parseInt(arr[2]));
+					//System.out.println(arr[2]));
 					Player newPlayer = new HumanPlayer(arr[1], 2, 2);
 					System.out.print("New Human Player made. ");
 					System.out.println(arr[1]);
