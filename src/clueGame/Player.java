@@ -8,9 +8,17 @@ public abstract class Player {
 	private boolean isHuman;
 	
 	public Player(String name, int startRow, int startColumn) {
-		this.name = name;
+		this.setName(name);
 		this.startRow = startRow;
 		this.startColumn = startColumn;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }
 

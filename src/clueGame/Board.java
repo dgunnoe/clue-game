@@ -1,3 +1,7 @@
+/**
+ * @author Desiree
+ */
+
 package clueGame;
 
 import java.io.File;
@@ -8,7 +12,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
-import experiments.TestBoardCell;
+//import experiments.TestBoardCell;
 
 import java.io.FileReader;
 
@@ -65,21 +69,32 @@ public class Board {
 	public void loadSetupConfig() throws FileNotFoundException, BadConfigFormatException {
 		File setupFile = new File(setupConfigFile);
 		//System.out.println("Absolute path of setupConfigFile: " + setupFile.getAbsolutePath());
-
+		boolean firstRun = true;
 		Scanner reader = new Scanner(setupFile);
 		while (reader.hasNextLine()) {
 			String data = reader.nextLine();
 			String[] arr = data.split(", ", 3);
+			System.out.println(arr[0]);
 			if (arr[0].equals("Room") || arr[0].equals("Space")) {
 				Room newRoom = new Room(arr[1]);
 				roomMap.put(arr[2].charAt(0), newRoom);
+				//System.out.println(roomMap.size());
 //				for (String s: arr) {
 //					System.out.println(s);
 //				}
-			} 
-//			else if (arr[0].equals("Player")) {
-//				Player newPlayer = new Player(arr[1], Integer.parseInt(arr[2]), Integer.parseInt(arr[3]));
-//			}
+			} else if (arr[0].equals("Player")) {
+				System.out.print(firstRun);
+				if (firstRun) {
+					Player newPlayer = new HumanPlayer(arr[1], Integer.parseInt(arr[2]), Integer.parseInt(arr[3]));
+					System.out.println(newPlayer.getName());
+					firstRun = false;
+				} else {
+					Player newPlayer = new ComputerPlayer(arr[1], Integer.parseInt(arr[2]), Integer.parseInt(arr[3]));
+					System.out.println(newPlayer.toString());
+				}
+			} else {
+				System.out.println("lll");
+			}
 			
 			//System.out.println(data);
 		}
