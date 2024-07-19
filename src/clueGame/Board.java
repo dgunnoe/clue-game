@@ -73,7 +73,7 @@ public class Board {
 		Scanner reader = new Scanner(setupFile);
 		while (reader.hasNextLine()) {
 			String data = reader.nextLine();
-			String[] arr = data.split(", ", 3);
+			String[] arr = data.split(", ");
 			System.out.println(arr[0]);
 			
 			if (arr[0].equals("Room") || arr[0].equals("Space")) {
@@ -88,13 +88,14 @@ public class Board {
 				if (firstRun) {
 					System.out.println("Here");
 					//System.out.println(arr[2]));
-					Player newPlayer = new HumanPlayer(arr[1], 2, 2);
+					Player newPlayer = new HumanPlayer(arr[1], Integer.parseInt(arr[2]), Integer.parseInt(arr[3]));
 					System.out.print("New Human Player made. ");
 					System.out.println(arr[1]);
 					firstRun = false;
 				} else {
-					Player newPlayer = new ComputerPlayer(arr[1], 3, 3);
+					Player newPlayer = new ComputerPlayer(arr[1], Integer.parseInt(arr[2]), Integer.parseInt(arr[3]));
 					System.out.print("New Computer Player made. ");
+					System.out.println(Integer.parseInt(arr[2]));
 					System.out.println(arr[1]);
 				}
 			} else {
