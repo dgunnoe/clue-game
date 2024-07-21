@@ -70,18 +70,19 @@ public class Board {
 	
 	public void loadSetupConfig() throws FileNotFoundException, BadConfigFormatException {
 		File setupFile = new File(setupConfigFile);
-		//System.out.println("Absolute path of setupConfigFile: " + setupFile.getAbsolutePath());
 		boolean firstRun = true;
 		deck = new HashSet<Card>();
 		Scanner reader = new Scanner(setupFile);
+
 		while (reader.hasNextLine()) {
+		// arr[0] is Room/Player/Weapon
+		// arr[1] is name
 			String data = reader.nextLine();
-			String[] arr = data.split(", ");
-			//System.out.println(arr[0]);
-			
+			String[] arr = data.split(", "); // each line
+						
 			if (arr[0].equals("Room") || arr[0].equals("Space")) {
 				Room newRoom = new Room(arr[1]);
-				roomMap.put(arr[2].charAt(0), newRoom);
+				roomMap.put(arr[2].charAt(0), newRoom); // roomMap(char, Room)
 				if (arr[0].equals("Room")) {
 					Card newCard = new Card(arr[1]);
 					deck.add(newCard);
@@ -115,7 +116,6 @@ public class Board {
 			}
 			
 			
-			//System.out.println(data);
 		}
 //		for (Map.Entry<Character, Room> entry : roomMap.entrySet()) {
 //		    System.out.println(entry.getKey() + ":" + entry.getValue().toString());
@@ -129,6 +129,7 @@ public class Board {
 			File layoutFile = new File(layoutConfigFile);
 			Scanner reader1 = new Scanner(layoutFile);
 			boolean firstRun = true;
+			
 			while (reader1.hasNextLine()) {
 				String data = reader1.nextLine();
 				String[] cols = data.split("\\s*,\\s*"); // This regex will split on commas surrounded by any amount of whitespace
@@ -142,14 +143,14 @@ public class Board {
 			
 			grid = new BoardCell[numRows][numColumns];
 			int tempRow = 0;
-			int counter = 0;
+			//int counter = 0;
 			Scanner reader2 = new Scanner(layoutFile);
 			while (reader2.hasNextLine()) {
 				String data = reader2.nextLine();
-				String[] splitRow = data.split("\\s*,\\s*");
+				String[] splitRow = data.split("\\s*,\\s*"); // This regex will split on commas surrounded by any amount of whitespace
 				for (int tempCol = 0; tempCol < numColumns; tempCol++) {
-					String splitCol = splitRow[tempCol];
-					counter++;
+					String splitCol = splitRow[tempCol]; // splitRow gets each row and splitCol is each value in the arr
+					//counter++;
 					//System.out.println(splitCol);
 					grid[tempRow][tempCol] = new BoardCell(tempRow, tempCol, splitCol);
 				
@@ -196,7 +197,7 @@ public class Board {
 					isCenterRoom = true;
 				}
 				
-	
+				// if it is a walkway, each surrounding walkway is apart of adjList
 				if (isWalkway) {
 					if (i - 1 >= 0 && i - 1 <= numRows && grid[i-1][j].getInitial() == 'W') { // looking at upper neighbor
 						tempAdjList.add(grid[i-1][j]);
@@ -210,8 +211,8 @@ public class Board {
 					if (j + 1 >= 0 && j + 1 < numColumns && grid[i][j+1].getInitial() == 'W') { // looking at right neighbor
 						tempAdjList.add(grid[i][j+1]);
 					}
-					//System.out.println("temp size " + tempAdjList.size());
 					
+					// if the walkway is also a doorway, that room's center is in addition apart of adjList 
 					if (isDoorway) {
 						int doorwayRow = i;
 						int doorwayCol = j;
