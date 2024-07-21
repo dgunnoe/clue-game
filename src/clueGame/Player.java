@@ -7,10 +7,12 @@ public abstract class Player {
 	private int startRow, startColumn;
 	private boolean isHuman;
 	
-	public Player(String name, int startRow, int startColumn) {
+	
+	public Player(String name, int startRow, int startColumn, String stringColor) {
 		this.setName(name);
 		this.startRow = startRow;
 		this.startColumn = startColumn;
+		this.color = Color.decode(stringColor);
 	}
 	
 	public void updateHand(Card card) {

@@ -4,6 +4,7 @@
 
 package clueGame;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
@@ -29,6 +30,7 @@ public class Board {
 	private BoardCell cell;
 	private Set<BoardCell> targets;
 	private Set<BoardCell> visited;
+	private Set<Card> deck;
   
     // constructor is private to ensure only one can be created
     private Board() {
@@ -70,15 +72,20 @@ public class Board {
 		File setupFile = new File(setupConfigFile);
 		//System.out.println("Absolute path of setupConfigFile: " + setupFile.getAbsolutePath());
 		boolean firstRun = true;
+		deck = new HashSet<Card>();
 		Scanner reader = new Scanner(setupFile);
 		while (reader.hasNextLine()) {
 			String data = reader.nextLine();
 			String[] arr = data.split(", ");
-			System.out.println(arr[0]);
+			//System.out.println(arr[0]);
 			
 			if (arr[0].equals("Room") || arr[0].equals("Space")) {
 				Room newRoom = new Room(arr[1]);
 				roomMap.put(arr[2].charAt(0), newRoom);
+				if (arr[0].equals("Room")) {
+					Card newCard = new Card(arr[1]);
+					deck.add(newCard);
+				}
 				//System.out.println(roomMap.size());
 //				for (String s: arr) {
 //					System.out.println(s);
@@ -86,20 +93,25 @@ public class Board {
 			} else if (arr[0].equals("Player")) {
 				//System.out.print(firstRun);
 				if (firstRun) {
-					System.out.println("Here");
-					//System.out.println(arr[2]));
-					Player newPlayer = new HumanPlayer(arr[1], Integer.parseInt(arr[2]), Integer.parseInt(arr[3]));
+					Player newPlayer = new HumanPlayer(arr[1], Integer.parseInt(arr[2]), Integer.parseInt(arr[3]), arr[4].toUpperCase());
 					System.out.print("New Human Player made. ");
+					Card newCard = new Card(arr[1]);
+					deck.add(newCard);
 					System.out.println(arr[1]);
 					firstRun = false;
 				} else {
-					Player newPlayer = new ComputerPlayer(arr[1], Integer.parseInt(arr[2]), Integer.parseInt(arr[3]));
+					Player newPlayer = new ComputerPlayer(arr[1], Integer.parseInt(arr[2]), Integer.parseInt(arr[3]), arr[4].toUpperCase());
 					System.out.print("New Computer Player made. ");
+					System.out.println(arr[4].toUpperCase());
+					Card newCard = new Card(arr[1]);
+					deck.add(newCard);
 					System.out.println(Integer.parseInt(arr[2]));
-					System.out.println(arr[1]);
+			
 				}
-			} else {
-				System.out.println("Weapon");
+			} else if (arr[0].equals("Weapon")) {
+				Card newCard = new Card(arr[1]);
+				deck.add(newCard);
+				//System.out.println(arr[1]);
 			}
 			
 			
@@ -311,6 +323,9 @@ public class Board {
 		return grid[row][col].getAdjList();
 	}
 
+	public Set<Card> getDeck() {
+		return deck;
+	}
 	
      
     

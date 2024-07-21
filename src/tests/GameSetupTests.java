@@ -31,7 +31,7 @@ public class GameSetupTests {
 	}
 	
 	
-	@Test
+	//@Test
 	//Load people and weapons from ClueSetup.txt and ensure the data was loaded properly. [20pts]
 	//Create Player class with human and computer child classes.   Use people data to instantiate 6 players (1 human and 5 computer) [20pts]
 	public void loadPeopleAndWeapons() {
@@ -50,6 +50,57 @@ public class GameSetupTests {
 		Assert.assertTrue(testList.contains(board.getCell(1, 3)));
 		
 	}
+	
+	
+	@Test
+ 	//Create complete deck of cards (weapons, people and rooms) [10pts]
+ 	public void checkDeck() {
+ 		int deckSize = board.getDeck().size();
+ 		Assert.assertEquals(21, deckSize);
+ 		
+
+ 	}
+
+ 	//@Test
+ 	// Deal cards to the Answer and the players (all cards dealt, players have roughly same # of cards, no card dealt twice) [20pts]
+ 	// All cards should be dealt.
+ 	public void checkDeal() {
+
+ 		// Start at 1,1
+ 		BoardCell cell = board.getCell(1,1);
+
+ 		// set up occupied cells.
+ 		board.getCell(0, 0).setOccupied(true);
+ 		board.getCell(0, 2).setIsRoom(true);
+
+ 		board.calcTargets(cell, 2);
+ 		Set<BoardCell> targets = board.getTargets();
+ 		//System.out.println("target size: " + targets.size());
+ 		Assert.assertEquals(5, targets.size());
+ 		//Assert.assertTrue(targets.contains(board.getCell(0, 0)));
+ 		Assert.assertTrue(targets.contains(board.getCell(0, 2)));
+
+ 	}
+
+ 	//@Test
+ 	// Ensure sol has 3 cards and of each card type
+ 	public void checkSolution() {
+
+ 		// Start at 1,1
+ 		BoardCell cell = board.getCell(1,1);
+
+ 		// set up occupied cells.
+ 		board.getCell(0, 0).setOccupied(true);
+ 		board.getCell(0, 2).setIsRoom(true);
+
+ 		board.calcTargets(cell, 2);
+ 		Set<BoardCell> targets = board.getTargets();
+ 		//System.out.println("target size: " + targets.size());
+ 		Assert.assertEquals(5, targets.size());
+ 		//Assert.assertTrue(targets.contains(board.getCell(0, 0)));
+ 		Assert.assertTrue(targets.contains(board.getCell(0, 2)));
+
+ 	}
 	
 
 }

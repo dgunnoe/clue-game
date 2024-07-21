@@ -13,13 +13,13 @@ Room, Annex, N
 Space, Unused, X
 Space, Walkway, W
 
-// Players
-Player, Michael Scott, 12, 12
-Player, Jim Halpert, 13, 13
-Player, Pam Beesly, 14, 14
-Player, Dwight Schrute, 15, 15
-Player, Kelly Kapoor, 16, 16
-Player, Kevin Malone, 17, 17
+// Players in rainbow order
+Player, Michael Scott, 12, 12, #FC2C03
+Player, Jim Halpert, 13, 13, #FC9003
+Player, Pam Beesly, 14, 14, #215407
+Player, Dwight Schrute, 15, 15, #0CEBE3
+Player, Kelly Kapoor, 16, 16, #8A0CEB
+Player, Kevin Malone, 17, 17, #EB0C7F
 
 // Weapons
 Weapon, Dundie Trophy 
