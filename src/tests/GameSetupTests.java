@@ -54,32 +54,18 @@ public class GameSetupTests {
 	
 	@Test
  	//Create complete deck of cards (weapons, people and rooms) [10pts]
- 	public void checkDeck() {
+ 	public void deckCount() {
  		int deckSize = board.getDeck().size();
  		Assert.assertEquals(21, deckSize);
  		
 
  	}
 
- 	//@Test
+ 	@Test
  	// Deal cards to the Answer and the players (all cards dealt, players have roughly same # of cards, no card dealt twice) [20pts]
  	// All cards should be dealt.
  	public void checkDeal() {
-
- 		// Start at 1,1
- 		BoardCell cell = board.getCell(1,1);
-
- 		// set up occupied cells.
- 		board.getCell(0, 0).setOccupied(true);
- 		board.getCell(0, 2).setIsRoom(true);
-
- 		board.calcTargets(cell, 2);
- 		Set<BoardCell> targets = board.getTargets();
- 		//System.out.println("target size: " + targets.size());
- 		Assert.assertEquals(5, targets.size());
- 		//Assert.assertTrue(targets.contains(board.getCell(0, 0)));
- 		Assert.assertTrue(targets.contains(board.getCell(0, 2)));
-
+ 		board.deal();
  	}
 
  	//@Test

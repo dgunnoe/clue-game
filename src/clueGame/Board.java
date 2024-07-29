@@ -7,8 +7,12 @@ package clueGame;
 import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
@@ -22,15 +26,22 @@ public class Board {
 	private BoardCell[][] grid;
 	private int numRows;
 	private int numColumns;
+	
 	private String layoutConfigFile;
 	private String setupConfigFile;
+	
 	private Map<Character, Room> roomMap;
     private static Board theInstance = new Board();
 	private Room room;
 	private BoardCell cell;
+	
 	private Set<BoardCell> targets;
 	private Set<BoardCell> visited;
+	
 	private Set<Card> deck;
+	private List<Card> deckList;
+	private Solution theAnswer;
+
   
     // constructor is private to ensure only one can be created
     private Board() {
@@ -84,7 +95,7 @@ public class Board {
 				Room newRoom = new Room(arr[1]);
 				roomMap.put(arr[2].charAt(0), newRoom); // roomMap(char, Room)
 				if (arr[0].equals("Room")) {
-					Card newCard = new Card(arr[1]);
+					Card newCard = new Card(arr[1], CardType.ROOM);
 					deck.add(newCard);
 				}
 				//System.out.println(roomMap.size());
@@ -96,7 +107,7 @@ public class Board {
 				if (firstRun) {
 					Player newPlayer = new HumanPlayer(arr[1], Integer.parseInt(arr[2]), Integer.parseInt(arr[3]), arr[4].toUpperCase());
 					System.out.print("New Human Player made. ");
-					Card newCard = new Card(arr[1]);
+					Card newCard = new Card(arr[1], CardType.PERSON);
 					deck.add(newCard);
 					System.out.println(arr[1]);
 					firstRun = false;
@@ -104,13 +115,13 @@ public class Board {
 					Player newPlayer = new ComputerPlayer(arr[1], Integer.parseInt(arr[2]), Integer.parseInt(arr[3]), arr[4].toUpperCase());
 					System.out.print("New Computer Player made. ");
 					System.out.println(arr[4].toUpperCase());
-					Card newCard = new Card(arr[1]);
+					Card newCard = new Card(arr[1], CardType.PERSON);
 					deck.add(newCard);
 					System.out.println(Integer.parseInt(arr[2]));
 			
 				}
 			} else if (arr[0].equals("Weapon")) {
-				Card newCard = new Card(arr[1]);
+				Card newCard = new Card(arr[1], CardType.WEAPON);
 				deck.add(newCard);
 				//System.out.println(arr[1]);
 			}
@@ -286,8 +297,33 @@ public class Board {
 	}
 	
 	public void deal() {
+		deckList = new ArrayList<>(deck);
+		boolean roomSolutionSet = false;
+		boolean weaponSolutionSet = false;
+		boolean personSolutionSet = false;
+		
+		System.out.println(deck);
+		System.out.println(deck.size());
+		
+		Collections.shuffle(deckList);
+		
+		theAnswer = new Solution();
+		
+		// deal the answer
+		for (int i = 0; i < deckList.size(); i++) {
+			Card c = deckList.get(i);
+			System.out.println(c);
+		}
+		
+		
+		System.out.println(deckList);
+		System.out.println(deckList.size());
+		
+		
+		
 		
 	}
+	
 
 	public void setConfigFiles(String string, String string2) {
 		layoutConfigFile = string;
