@@ -13,6 +13,10 @@ public class Card {
 		return false;
 	}
 	
+	public CardType getCardType() {
+		return cardType;
+	}
+	
 //	public equals()
 
 }

@@ -41,6 +41,8 @@ public class Board {
 	private Set<Card> deck;
 	private List<Card> deckList;
 	private Solution theAnswer;
+	
+	private ArrayList<Player> players;
 
   
     // constructor is private to ensure only one can be created
@@ -84,7 +86,8 @@ public class Board {
 		boolean firstRun = true;
 		deck = new HashSet<Card>();
 		Scanner reader = new Scanner(setupFile);
-
+		players = new ArrayList<Player>();
+		
 		while (reader.hasNextLine()) {
 		// arr[0] is Room/Player/Weapon
 		// arr[1] is name
@@ -106,6 +109,7 @@ public class Board {
 				//System.out.print(firstRun);
 				if (firstRun) {
 					Player newPlayer = new HumanPlayer(arr[1], Integer.parseInt(arr[2]), Integer.parseInt(arr[3]), arr[4].toUpperCase());
+					players.add(newPlayer);
 					System.out.print("New Human Player made. ");
 					Card newCard = new Card(arr[1], CardType.PERSON);
 					deck.add(newCard);
@@ -113,6 +117,7 @@ public class Board {
 					firstRun = false;
 				} else {
 					Player newPlayer = new ComputerPlayer(arr[1], Integer.parseInt(arr[2]), Integer.parseInt(arr[3]), arr[4].toUpperCase());
+					players.add(newPlayer);
 					System.out.print("New Computer Player made. ");
 					System.out.println(arr[4].toUpperCase());
 					Card newCard = new Card(arr[1], CardType.PERSON);
@@ -299,8 +304,9 @@ public class Board {
 	public void deal() {
 		deckList = new ArrayList<>(deck);
 		boolean roomSolutionSet = false;
-		boolean weaponSolutionSet = false;
 		boolean personSolutionSet = false;
+		boolean weaponSolutionSet = false;
+
 		
 		System.out.println(deck);
 		System.out.println(deck.size());
@@ -312,19 +318,47 @@ public class Board {
 		// deal the answer
 		for (int i = 0; i < deckList.size(); i++) {
 			Card c = deckList.get(i);
-			System.out.println(c);
+			if (c.getCardType() == CardType.ROOM && roomSolutionSet == false) {
+				theAnswer.addRoom(c);
+				deckList.remove(i);
+				roomSolutionSet = true;
+			} else if (c.getCardType() == CardType.PERSON && personSolutionSet == false) {
+				theAnswer.addPerson(c);
+				deckList.remove(i);
+				personSolutionSet = true;
+			} else if (c.getCardType() == CardType.WEAPON && weaponSolutionSet == false) {
+				theAnswer.addWeapon(c);
+				deckList.remove(i);
+				weaponSolutionSet = true;
+			}			
 		}
 		
-		
+		System.out.println(theAnswer);
 		System.out.println(deckList);
 		System.out.println(deckList.size());
 		
+		// deal to the players
+		while (deckList.size() > 0) {
+		    System.out.println("deckList size: " + deckList.size());
+		    
+		    // Iterate in reverse order to prevent IndexOutOfBoundsException
+		    // By iterating from the end of the list to the beginning, you avoid shifting issues.
+		    for (int i = Math.min(players.size(), deckList.size()) - 1; i >= 0; i--) {
+		        System.out.println("i " + i);
+		        players.get(i).updateHand(deckList.get(i));
+		        deckList.remove(i);
+		    }
+		}
+
 		
 		
 		
 	}
 	
-
+	public Solution getTheAnswer() {
+		return theAnswer;
+	}
+	
 	public void setConfigFiles(String string, String string2) {
 		layoutConfigFile = string;
 		setupConfigFile = string2;
@@ -360,8 +394,16 @@ public class Board {
 		return grid[row][col].getAdjList();
 	}
 
-	public Set<Card> getDeck() {
+	public Set<Card> getDeckOfCards() {
 		return deck;
+	}
+	
+	public List<Card> getDeckList() {
+		return deckList;
+	}
+	
+	public ArrayList<Player> getPlayers() {
+		return players;
 	}
 	
      
