@@ -6,5 +6,12 @@ public class ComputerPlayer extends Player {
 		super(name, startRow, startColumn, color);
 		// TODO Auto-generated constructor stub
 	}
+	
+	public Solution createSuggestion() {
+		return null;
+	}
 
+	public BoardCell selectTarget() {
+		return null;
+	}
 }

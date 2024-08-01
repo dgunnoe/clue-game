@@ -14,6 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 
 import clueGame.Board;
 import clueGame.BoardCell;
+import clueGame.Card;
 import clueGame.CardType;
 import clueGame.Player;
 import clueGame.Solution;
@@ -36,6 +37,7 @@ public class GameSetupTests {
 		// Initialize will load config files
 		board.initialize();
 		solution = new Solution();
+		board.deal(); // only deal once!
 	}
 	
 	
@@ -60,7 +62,7 @@ public class GameSetupTests {
  	// Deal cards to the Answer and the players (all cards dealt, players have roughly same # of cards, no card dealt twice) [20pts]
  	// All cards should be dealt.
  	public void checkDeal() {
- 		board.deal();
+ 		//board.deal();
  		int deckSize = board.getDeckList().size();
  		Assert.assertEquals(0, deckSize);
  	}
@@ -68,12 +70,21 @@ public class GameSetupTests {
  	@Test
  	// Ensure sol has 3 cards and of each card type
  	public void testSolution() {
- 		board.deal();
 		Solution answer = board.getTheAnswer();
 		assertTrue(answer.getPerson().getCardType() == CardType.PERSON);
 		assertTrue(answer.getWeapon().getCardType() == CardType.WEAPON);
 		assertTrue(answer.getRoom().getCardType() == CardType.ROOM);
 	}
+ 	
+// 	@Test
+// 	//Check an accusation
+// 	public void checkAccusation() {
+// 		Card a = new Card("Parking Lot", CardType.ROOM);
+// 		Card b = new Card("Michael Scott", CardType.PERSON);
+// 		Card c = new Card("Dundie Trophy", CardType.WEAPON);
+//
+// 		assertTrue(board.checkAccusation(a, b, c));
+// 	}
 	
 
 }

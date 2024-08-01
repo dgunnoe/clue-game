@@ -1,11 +1,13 @@
 package clueGame;
 import java.awt.Color;
+import java.util.Set;
 
 public abstract class Player {
 	private String name;
 	private Color color;
 	private int startRow, startColumn;
 	private boolean isHuman;
+	private Set<Card> seenCards;
 	
 	
 	public Player(String name, int startRow, int startColumn, String stringColor) {
@@ -19,6 +21,13 @@ public abstract class Player {
 		 
 	}
 
+	public void updateSeen(Card seenCard) {
+		
+	}
+
+	public Card disproveSuggestion() {
+		return null;
+	}
 	public String getName() {
 		return name;
 	}

@@ -308,7 +308,7 @@ public class Board {
 		boolean weaponSolutionSet = false;
 
 		
-		System.out.println(deck);
+		//System.out.println(deck);
 		System.out.println(deck.size());
 		
 		Collections.shuffle(deckList);
@@ -334,7 +334,7 @@ public class Board {
 		}
 		
 		System.out.println(theAnswer);
-		System.out.println(deckList);
+		//System.out.println(deckList); proves that shuffle worked
 		System.out.println(deckList.size());
 		
 		// deal to the players
@@ -344,15 +344,24 @@ public class Board {
 		    // Iterate in reverse order to prevent IndexOutOfBoundsException
 		    // By iterating from the end of the list to the beginning, you avoid shifting issues.
 		    for (int i = Math.min(players.size(), deckList.size()) - 1; i >= 0; i--) {
-		        System.out.println("i " + i);
+		        //System.out.println("i " + i);
 		        players.get(i).updateHand(deckList.get(i));
 		        deckList.remove(i);
 		    }
 		}
-
+	
+	}
+	
+	public boolean checkAccusation(Card room, Card person, Card weapon) {
 		
-		
-		
+		if (room.equals(theAnswer.getRoom()) && person.equals(theAnswer.getPerson()) && weapon.equals(theAnswer.getWeapon())) {
+			return true;
+		}
+		return false;
+	}
+	
+	public Card handleSuggestion() {
+		return null;
 	}
 	
 	public Solution getTheAnswer() {
