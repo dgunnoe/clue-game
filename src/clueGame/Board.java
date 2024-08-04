@@ -319,15 +319,15 @@ public class Board {
 		for (int i = 0; i < deckList.size(); i++) {
 			Card c = deckList.get(i);
 			if (c.getCardType() == CardType.ROOM && roomSolutionSet == false) {
-				theAnswer.addRoom(c);
+				theAnswer.setRoom(c);
 				deckList.remove(i);
 				roomSolutionSet = true;
 			} else if (c.getCardType() == CardType.PERSON && personSolutionSet == false) {
-				theAnswer.addPerson(c);
+				theAnswer.setPerson(c);
 				deckList.remove(i);
 				personSolutionSet = true;
 			} else if (c.getCardType() == CardType.WEAPON && weaponSolutionSet == false) {
-				theAnswer.addWeapon(c);
+				theAnswer.setWeapon(c);
 				deckList.remove(i);
 				weaponSolutionSet = true;
 			}			

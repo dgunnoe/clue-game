@@ -15,15 +15,15 @@ public class Solution {
 	}
 	
 	
-	public void addRoom(Card c) {
+	public void setRoom(Card c) {
 		this.room = c;
 	}
 	
-	public void addPerson(Card c) {
+	public void setPerson(Card c) {
 		this.person = c;
 	}
 	
-	public void addWeapon(Card c) {
+	public void setWeapon(Card c) {
 		this.weapon = c;
 	}
 	

@@ -97,8 +97,7 @@ public class GameSetupTests {
  		
  		// Test that there are no matches and null is returned
  		Card newRoom = new Card("Annex", CardType.ROOM);
- 		suggestion.addRoom(newRoom);
- 		
+ 		suggestion.setRoom(newRoom);
  		c = testPlayer.disproveSuggestion(suggestion);
  		Assert.assertNull(c);
  		
