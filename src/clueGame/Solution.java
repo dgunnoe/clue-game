@@ -8,6 +8,12 @@ public class Solution {
 		super();
 	}
 	
+	public Solution(Card r, Card p, Card w) {
+		room = r;
+		person = p;
+		weapon = w;
+	}
+	
 	
 	public void addRoom(Card c) {
 		this.room = c;
